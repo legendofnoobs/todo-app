@@ -9,20 +9,25 @@
   font-family: 'Poppins', sans-serif;
 }
 body {
-  background: #4a4cd1;
+  background-image: url(./assets/wallpaper.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .container {
   width: 700px;
-  background: rgb(23, 0, 77);
+  background: rgba(0, 0, 0, 0.418);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 1rem;
   /* margin: 5rem auto; */
   margin: 3rem auto;
   border-radius: 14px;
+  border: 0.5px solid grey;
 }
 .container h1 {
   text-align: center;
   font-family: 'poppins';
-  color: rgb(161, 160, 160);
+  color: rgb(255, 255, 255);
   font-size: 3rem;
   text-transform: uppercase;
   font-weight: 400;
@@ -74,7 +79,7 @@ button:hover {
   margin-top: 2rem;
 }
 .toDoList span {
-  color: rgb(161, 160, 160);
+  color: rgb(255, 255, 255);
   text-transform: uppercase;
   font-size: 14px;
   font-weight: 600;
@@ -94,7 +99,7 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: rgb(186, 186, 186);
+  color: rgb(255, 255, 255);
 }
 input[type='checkbox'] {
   padding: 5px;

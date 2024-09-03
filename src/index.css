@@ -53,6 +53,7 @@ body {
   padding: 10px;
   color: rgb(161, 160, 160);
   font-size: 1rem;
+  width: 225px;
 }
 .inputField input::placeholder {
   color: rgb(161, 160, 160);

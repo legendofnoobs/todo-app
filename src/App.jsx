@@ -1,30 +1,54 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TaskInput from "./components/TaskInput";
 import TaskItem from "./components/TaskItem";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
-  const [toDoList,SetToDoList] = useState([]);
+  const [toDoList, SetToDoList] = useState(() => {
+    // Load tasks from localStorage when the component mounts
+    const savedTasks = localStorage.getItem("toDoList");
+    return savedTasks ? JSON.parse(savedTasks) : [];
+  });
+
+  // Save tasks to localStorage whenever the toDoList changes
+  useEffect(() => {
+    localStorage.setItem("toDoList", JSON.stringify(toDoList));
+  }, [toDoList]);
+
   const addTask = (taskName) => {
-    const newTask = {taskName, checked:false}
-    SetToDoList([...toDoList, newTask])
-  }
-  function deleteTask(deleteTaskName){
-    SetToDoList(toDoList.filter((task) => task.taskName !== deleteTaskName))
-  }
-  function toggleCheck(taskName){
-    SetToDoList((prevToDoList) => 
-      prevToDoList.map((task) => task.taskName === taskName? {...task, checked: !task.checked} : task,))
-  }
+    const newTask = { id: uuidv4(), taskName, checked: false };
+    SetToDoList((prevToDoList) => [...prevToDoList, newTask]);
+  };
+
+  const deleteTask = (deleteTaskId) => {
+    SetToDoList((prevToDoList) =>
+      prevToDoList.filter((task) => task.id !== deleteTaskId)
+    );
+  };
+
+  const toggleCheck = (taskId) => {
+    SetToDoList((prevToDoList) =>
+      prevToDoList.map((task) =>
+        task.id === taskId ? { ...task, checked: !task.checked } : task
+      )
+    );
+  };
+
   return (
     <>
       <div className="container">
         <h1>Todo App</h1>
-        <TaskInput addTask={addTask}/>
+        <TaskInput addTask={addTask} />
         <div className="toDoList">
           <span>To Do</span>
           <ul className="list-items">
-            {toDoList.map((task, key) => (
-              <TaskItem task={task} key={key} deleteTask={deleteTask} toggleCheck={toggleCheck}/>
+            {toDoList.map((task) => (
+              <TaskItem
+                task={task}
+                key={task.id}
+                deleteTask={deleteTask}
+                toggleCheck={toggleCheck}
+              />
             ))}
           </ul>
           {toDoList.length === 0 ? (
